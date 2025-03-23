@@ -1,6 +1,7 @@
 package com.devsuperior.dscatalog.tests;
 
 import com.devsuperior.dscatalog.DTO.ProductDTO;
+import com.devsuperior.dscatalog.DTO.ProductMinDTO;
 import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.entities.Product;
 
@@ -17,6 +18,10 @@ public class Factory {
 
     public static ProductDTO createProductDTO(){
         return new ProductDTO(createProduct());
+    }
+
+    public static ProductMinDTO createProductMinDTO(){
+        return new ProductMinDTO(createProduct());
     }
 
     public static Category createCategory(){

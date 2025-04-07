@@ -1,4 +1,4 @@
-package com.devsuperior.dscatalog.DTO;
+package com.devsuperior.dscatalog.DTO.exceptions;
 
 import java.time.Instant;
 import java.util.ArrayList;

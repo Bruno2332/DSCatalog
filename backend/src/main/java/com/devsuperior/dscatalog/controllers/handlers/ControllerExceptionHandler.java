@@ -1,7 +1,7 @@
 package com.devsuperior.dscatalog.controllers.handlers;
 
-import com.devsuperior.dscatalog.DTO.CustomError;
-import com.devsuperior.dscatalog.DTO.ValidationError;
+import com.devsuperior.dscatalog.DTO.exceptions.CustomError;
+import com.devsuperior.dscatalog.DTO.exceptions.ValidationError;
 import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
 import com.devsuperior.dscatalog.services.exceptions.ForbiddenException;
 import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;

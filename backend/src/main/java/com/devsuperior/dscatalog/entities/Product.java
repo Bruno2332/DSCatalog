@@ -2,6 +2,7 @@ package com.devsuperior.dscatalog.entities;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -19,6 +20,7 @@ public class Product {
     private String description;
     private Double price;
     private String imgUrl;
+    private Instant date;
 
     @ManyToMany
     @JoinTable(name = "tb_product_category",
@@ -75,6 +77,10 @@ public class Product {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public Instant getDate() {
+        return date;
     }
 
     public Set<Category> getCategories() {

@@ -1,4 +1,4 @@
-package com.devsuperior.dscatalog.DTO;
+package com.devsuperior.dscatalog.DTO.exceptions;
 
 public class FieldMessage {
 

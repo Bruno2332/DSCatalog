@@ -2,6 +2,7 @@ package com.devsuperior.dscatalog.controllers;
 
 import com.devsuperior.dscatalog.DTO.ProductDTO;
 import com.devsuperior.dscatalog.DTO.ProductMinDTO;
+import com.devsuperior.dscatalog.projection.ProductProjection;
 import com.devsuperior.dscatalog.services.ProductService;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
@@ -28,10 +29,14 @@ public class ProductController {
         return ResponseEntity.ok(dto);
     }
 
+
     @GetMapping
-        public ResponseEntity<Page<ProductMinDTO>> findAll(@RequestParam(name = "name", defaultValue = "") String name, Pageable pageable){
-            Page<ProductMinDTO> dto = service.findAll(name, pageable);
-            return ResponseEntity.ok(dto);
+    public ResponseEntity<Page<ProductMinDTO>> searchProducts(
+            @RequestParam(name = "name", defaultValue = "") String name,
+            @RequestParam(value = "categoryId", defaultValue = "0") String categoryId,
+            Pageable pageable){
+        Page<ProductMinDTO> dto = service.searchProducts(name, categoryId, pageable);
+        return ResponseEntity.ok(dto);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

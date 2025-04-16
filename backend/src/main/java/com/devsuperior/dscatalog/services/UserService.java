@@ -119,13 +119,10 @@ public class UserService implements UserDetailsService {
         try{
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
-
-            // Tente identificar o claim certo
             String username = jwtPrincipal.getClaim("username");
             if (username == null) {
                 username = jwtPrincipal.getClaim("sub"); // fallback
             }
-
             return repository.findByEmail(username)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found: "));
         }

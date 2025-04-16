@@ -2,7 +2,7 @@ package com.devsuperior.dscatalog.controllers;
 
 import com.devsuperior.dscatalog.DTO.ProductDTO;
 import com.devsuperior.dscatalog.DTO.ProductMinDTO;
-import com.devsuperior.dscatalog.config.SecurityTestConfig;
+
 import com.devsuperior.dscatalog.services.ProductService;
 import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
 import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
@@ -11,9 +11,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
+
 import org.springframework.data.domain.PageImpl;
 
 
@@ -28,8 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ProductController.class)
-@Import(SecurityTestConfig.class)
+@WebMvcTest(value = ProductController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 public class ProductControllerTests {
 
     @Autowired
@@ -110,9 +110,9 @@ public class ProductControllerTests {
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("S.id").exists())
-            .andExpect(jsonPath("S.name").exists())
-            .andExpect(jsonPath("S.description").exists());
+            .andExpect(jsonPath("$.id").exists())
+            .andExpect(jsonPath("$.name").exists())
+            .andExpect(jsonPath("$.description").exists());
     }
 
     @Test

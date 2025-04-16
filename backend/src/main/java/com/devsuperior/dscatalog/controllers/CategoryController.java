@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 
 @RestController
@@ -28,8 +29,8 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<CategoryDTO>> findAll(Pageable pageable){
-        Page<CategoryDTO> dto = service.findAll(pageable);
+    public ResponseEntity<List<CategoryDTO>> findAll(){
+        List<CategoryDTO> dto = service.findAll();
         return ResponseEntity.ok(dto);
     }
 

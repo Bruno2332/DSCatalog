@@ -42,10 +42,9 @@ public class ResourceServerConfig {
     public SecurityFilterChain rsSecurityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .securityMatcher("/**") // Todas as requisições reais da API
+                .securityMatcher("/**")
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/**").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));

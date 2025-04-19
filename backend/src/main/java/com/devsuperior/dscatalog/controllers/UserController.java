@@ -36,7 +36,6 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserInsertDTO dto){
         UserDTO newDto = service.insert(dto);
@@ -45,14 +44,14 @@ public class UserController {
         return ResponseEntity.created(uri).body(newDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto){
         UserDTO newDto = service.update(id, dto);
         return ResponseEntity.ok(newDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         service.delete(id);

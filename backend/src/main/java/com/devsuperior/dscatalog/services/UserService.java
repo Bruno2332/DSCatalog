@@ -1,5 +1,6 @@
 package com.devsuperior.dscatalog.services;
 
+import com.devsuperior.dscatalog.DTO.RoleDTO;
 import com.devsuperior.dscatalog.DTO.UserDTO;
 import com.devsuperior.dscatalog.DTO.UserInsertDTO;
 import com.devsuperior.dscatalog.DTO.UserUpdateDTO;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 
 @Service
 public class UserService implements UserDetailsService {
@@ -56,6 +58,9 @@ public class UserService implements UserDetailsService {
     public UserDTO insert(UserInsertDTO dto){
         User entity = new User();
         copyDtoEntity(dto, entity);
+        entity.getRoles().clear();
+        Role role = roleRepository.findByAuthority("ROLE_OPERATOR");
+        entity.getRoles().add(role);
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         entity = repository.save(entity);
         return new UserDTO(entity);
@@ -92,10 +97,9 @@ public class UserService implements UserDetailsService {
         entity.setLastName(dto.getLastName());
         entity.setEmail(dto.getEmail());
         entity.getRoles().clear();
-        for (String rol : dto.getRoles()){
-            Role role = roleRepository.findByAuthority(rol)
-                    .orElseThrow(() -> new ResourceNotFoundException("Role não encontrada"));
-            entity.addRole(role);
+        for (RoleDTO roleDTO : dto.getRoles()){
+            Role role = roleRepository.getReferenceById(roleDTO.getId());
+            entity.getRoles().add(role);
         }
     }
 
@@ -123,8 +127,7 @@ public class UserService implements UserDetailsService {
             if (username == null) {
                 username = jwtPrincipal.getClaim("sub"); // fallback
             }
-            return repository.findByEmail(username)
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found: "));
+            return repository.findByEmail(username);
         }
         catch (Exception e){
             throw new UsernameNotFoundException("User not found", e);

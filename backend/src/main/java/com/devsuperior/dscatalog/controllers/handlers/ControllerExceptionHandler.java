@@ -3,6 +3,7 @@ package com.devsuperior.dscatalog.controllers.handlers;
 import com.devsuperior.dscatalog.DTO.exceptions.CustomError;
 import com.devsuperior.dscatalog.DTO.exceptions.ValidationError;
 import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
+import com.devsuperior.dscatalog.services.exceptions.EmailException;
 import com.devsuperior.dscatalog.services.exceptions.ForbiddenException;
 import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,6 +46,13 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(ForbiddenException.class)
 	public ResponseEntity<CustomError> forbidden(ForbiddenException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.FORBIDDEN;
+		CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+
+	@ExceptionHandler(EmailException.class)
+	public ResponseEntity<CustomError> email(EmailException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.BAD_REQUEST;
 		CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}

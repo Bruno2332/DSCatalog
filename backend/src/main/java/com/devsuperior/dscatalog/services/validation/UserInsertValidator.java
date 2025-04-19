@@ -25,8 +25,8 @@ public class UserInsertValidator implements ConstraintValidator<UserInsertValid,
     public boolean isValid(UserInsertDTO dto, ConstraintValidatorContext context){
         List<FieldMessage> list = new ArrayList<>();
 
-        Optional<User> user = repository.findByEmail(dto.getEmail());
-        if (user.isPresent()){
+        User user = repository.findByEmail(dto.getEmail());
+        if (user != null){
             list.add(new FieldMessage("email", "Email já existe"));
         }
 

@@ -42,6 +42,7 @@ public class ResourceServerConfig {
     public SecurityFilterChain rsSecurityFilterChain(HttpSecurity http) throws Exception {
 
         http
+                .csrf(csrf -> csrf.disable())
                 .securityMatcher("/**")
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()

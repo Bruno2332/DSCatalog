@@ -1,5 +1,6 @@
 package com.devsuperior.dscatalog.DTO;
 
+import com.devsuperior.dscatalog.entities.Role;
 import com.devsuperior.dscatalog.entities.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -21,7 +22,7 @@ public class UserDTO {
     @Email(message = "Favor inserir um email válido")
     private String email;
 
-    private List<String> roles = new ArrayList<>();
+    private List<RoleDTO> roles = new ArrayList<>();
 
     public UserDTO(){
     }
@@ -31,8 +32,8 @@ public class UserDTO {
         firstName = entity.getFirstName();
         lastName = entity.getLastName();
         email = entity.getEmail();
-        for (GrantedAuthority role : entity.getRoles()){
-            roles.add(role.getAuthority());
+        for (Role role : entity.getRoles()){
+            roles.add(new RoleDTO(role));
         }
     }
 
@@ -52,7 +53,7 @@ public class UserDTO {
         return email;
     }
 
-    public List<String> getRoles() {
+    public List<RoleDTO> getRoles() {
         return roles;
     }
 }
